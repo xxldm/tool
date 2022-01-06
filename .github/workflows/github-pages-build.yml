@@ -1,17 +1,21 @@
-name: GitHub Pages Build and Deploy
+name: 编译代码 & 更新 github pages 分支
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build-and-deploy:
+    name: 编译代码 & 更新 github pages 分支
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 检出代码
         uses: actions/checkout@v2
 
-      - name: Install and Build
+      - name: 安装依赖 & 编译web代码
         run: |
           cd tool-web
           npm install --global yarn
@@ -19,7 +23,7 @@ jobs:
           yarn
           yarn build
 
-      - name: Deploy
+      - name: 上传至 github pages 分支
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
