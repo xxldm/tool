@@ -1,0 +1,46 @@
+globals:
+  process: "readonly"
+  defineProps: "readonly"
+  defineEmits: "readonly"
+  defineExpose: "readonly"
+  withDefaults: "readonly"
+parser: "vue-eslint-parser"
+parserOptions:
+  parser: "@typescript-eslint/parser"
+  ecmaVersion: 2020
+  sourceType: "module"
+  ecmaFeatures:
+    jsx: true
+extends:
+    - "eslint:recommended"
+    - "plugin:vue/base"
+    - "plugin:vue/vue3-essential"
+    - "plugin:vue/vue3-strongly-recommended"
+    - "plugin:vue/vue3-recommended"
+    - "plugin:@intlify/vue-i18n/base"
+    - "plugin:@intlify/vue-i18n/recommended"
+    - "prettier"
+    - "plugin:prettier/recommended"
+rules:
+  "prettier/prettier": "error"
+  "@intlify/vue-i18n/no-dynamic-keys": "error"
+  "@intlify/vue-i18n/no-unused-keys":
+    - "error"
+    - extensions:
+        - ".js"
+        - ".vue"
+overrides:
+  - files: "*.vue"
+    rules:
+      no-unused-vars: "off"
+      no-unused-labels: "off"
+      no-undef: "off"
+settings:
+  vue-i18n:
+    localeDir:
+      pattern: "./path/to/src/locales/*.{json,json5,yaml,yml}"
+      localeKey: "file" # "file" or "key"
+    #    Specify the version of `vue-i18n` you are using.
+    #    If not specified, the message will be parsed twice.
+    messageSyntaxVersion: '^9.0.0'
+
