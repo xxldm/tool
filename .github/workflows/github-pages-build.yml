@@ -31,9 +31,12 @@ jobs:
 
   update-gh-pages:
     name: 更新 github pages 分支
-    needs: build-web
+    needs: [ build-web ]
     runs-on: ubuntu-latest
     steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+
       - name: 取出html代码
         uses: actions/download-artifact@v2
         with:
