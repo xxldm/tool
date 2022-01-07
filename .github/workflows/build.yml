@@ -1,7 +1,7 @@
 name: 提交编译测试
 on: [ push , pull_request ]
 jobs:
-  build-web:
+  build:
     name: 编译 html
     runs-on: ubuntu-latest
     steps:
@@ -18,46 +18,13 @@ jobs:
           yarn build
           echo 完成
 
-      - name: electron 写入 html
+      - name: 安装依赖 & 编译 electron
         run: |
           echo 开始
           echo 创建 dist 目录
           mkdir tool-electron/dist
           echo 复制 html 至 dist 目录
           cp -rf tool-web/dist/* tool-electron/dist/
-
-      - name: 暂存 html
-        uses: actions/upload-artifact@v2
-        with:
-          name: htmlCode
-          path: tool-web/dist
-
-      - name: 暂存 electron 代码
-        uses: actions/upload-artifact@v2
-        with:
-          name: electronCode
-          path: tool-electron
-
-  build-electron:
-    name: 编译 electron
-    needs: build-web
-    runs-on: ubuntu-latest
-    steps:
-      - name: 取出 html 代码
-        uses: actions/download-artifact@v2
-        with:
-          name: htmlCode
-          path: tool-web/dist
-
-      - name: 取出 electron 代码
-        uses: actions/download-artifact@v2
-        with:
-          name: electronCode
-          path: tool-electron
-
-      - name: 安装依赖 & 编译 electron
-        run: |
-          echo 开始
           cd tool-electron
           echo 安装依赖
           yarn
