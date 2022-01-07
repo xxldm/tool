@@ -6,7 +6,7 @@
   "author": "乡下来的喵",
   "scripts": {
     "dev": "node -r ts-node/register src/script/build-main --env=development --watch",
-    "build": "rimraf dist && node -r ts-node/register src/script/build-main --env=production && electron-builder"
+    "build": "node -r ts-node/register src/script/build-main --env=production && electron-builder"
   },
   "license": "SEE LICENSE IN <LICENSE>",
   "repository": {
@@ -73,7 +73,6 @@
     "minimist": "^1.2.5",
     "ora": "^5.4.1",
     "prettier": "2.5.1",
-    "rimraf": "^3.0.2",
     "rollup": "^2.63.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",

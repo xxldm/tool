@@ -4262,7 +4262,6 @@ __metadata:
     minimist: ^1.2.5
     ora: ^5.4.1
     prettier: 2.5.1
-    rimraf: ^3.0.2
     rollup: ^2.63.0
     ts-node: ^10.4.0
     tslib: ^2.3.1

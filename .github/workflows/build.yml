@@ -18,7 +18,7 @@ jobs:
           yarn build
           echo 完成
 
-      - name: electron 写入 html
+      - name: 安装依赖 & 编译 electron
         run: |
           echo 开始
           echo 创建 dist 目录
