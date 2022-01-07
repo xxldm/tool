@@ -29,5 +29,5 @@ jobs:
           echo 安装依赖
           yarn
           echo 编译 electron
-          yarn build
+          yarn build:dir
           echo 完成

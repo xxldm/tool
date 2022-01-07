@@ -6,7 +6,8 @@
   "author": "乡下来的喵",
   "scripts": {
     "dev": "node -r ts-node/register src/script/build-main --env=development --watch",
-    "build": "node -r ts-node/register src/script/build-main --env=production && electron-builder"
+    "build": "node -r ts-node/register src/script/build-main --env=production && electron-builder",
+    "build:dir": "node -r ts-node/register src/script/build-main --env=production && electron-builder --dir"
   },
   "license": "SEE LICENSE IN <LICENSE>",
   "repository": {
