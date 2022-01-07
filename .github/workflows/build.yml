@@ -48,6 +48,7 @@ jobs:
 
   build-electron:
     name: 编译 electron
+    needs: build-web
     runs-on: ubuntu-latest
     steps:
       - name: 取出 html 代码
