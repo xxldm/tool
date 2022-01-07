@@ -24,7 +24,7 @@ jobs:
           echo 创建 dist 目录
           mkdir tool-electron/dist
           echo 复制 html 至 dist 目录
-          cp -rf tool-web/dist/ tool-electron/dist/
+          cp -rf tool-web/dist/* tool-electron/dist/
 
       - name: 暂存 html
         uses: actions/upload-artifact@v2
