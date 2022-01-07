@@ -40,7 +40,7 @@ jobs:
       - name: 暂存 electron 代码
         uses: actions/upload-artifact@v2
         with:
-          name: htmlCode
+          name: electronCode
           path: tool-electron
 
   update-gh-pages:
@@ -72,10 +72,10 @@ jobs:
       matrix:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
     steps:
-      - name: 取出 html 代码
+      - name: 取出 electron 代码
         uses: actions/download-artifact@v2
         with:
-          name: htmlCode
+          name: electronCode
           path: tool-web/dist
 
       - name: 安装 Node.js、NPM 和 Yarn
