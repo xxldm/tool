@@ -2,7 +2,7 @@ name: 提交编译测试
 on: [ push , pull_request ]
 jobs:
   build:
-    name: 编译 html
+    name: 编译 html & electron
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
