@@ -54,6 +54,7 @@ jobs:
           echo ***开始***
           cd tool-web
           ls
+          echo --------------------------
           cd dist
           ls
           echo ***结束***
@@ -67,8 +68,9 @@ jobs:
       - name: test
         run: |
           echo ***开始***
-          cd tool-web
+          cd tool-electron
           ls
+          echo --------------------------
           cd dist
           ls
           echo ***结束***
