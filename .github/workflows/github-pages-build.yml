@@ -1,50 +1,90 @@
-name: 更新 github pages 分支
+name: 正式版构建
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
 jobs:
-  build-web:
-    name: 编译html代码
+  build:
+    name: 编译 html
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
         uses: actions/checkout@v2
 
-      - name: 安装依赖 & 编译html代码
+      - name: 安装依赖 & 编译 html
         run: |
+          echo 开始
           cd tool-web
+          echo 安装 yarn
           npm install --global yarn
-          yarn set version berry
+          echo 安装依赖
           yarn
+          echo 编译 html
           yarn build
+          echo 完成
 
-      - name: 暂存html代码
+      - name: electron 写入 html
+        run: |
+          echo 开始
+          echo 创建 dist 目录
+          mkdir tool-electron/dist
+          echo 复制 html 至 dist 目录
+          cp -ri tool-web/dist/* tool-electron/dist/
+
+      - name: 暂存 html
         uses: actions/upload-artifact@v2
         with:
           name: htmlCode
           path: tool-web/dist
 
+      - name: 暂存 electron 代码
+        uses: actions/upload-artifact@v2
+        with:
+          name: htmlCode
+          path: tool-electron
+
   update-gh-pages:
     name: 更新 github pages 分支
-    needs: [ build-web ]
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: 检出代码
-        uses: actions/checkout@v2
-
-      - name: 取出html代码
+      - name: 取出 html 代码
         uses: actions/download-artifact@v2
         with:
           name: htmlCode
           path: tool-web/dist
+
+      - name: 安装 git
+        run: |
+          npm install --global git
 
       - name: 上传至 github pages 分支
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
           folder: tool-web/dist
+
+  releases:
+    name: 发布 electron 程序
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+    steps:
+      - name: 取出 html 代码
+        uses: actions/download-artifact@v2
+        with:
+          name: htmlCode
+          path: tool-web/dist
+
+      - name: 安装 Node.js、NPM 和 Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: 发布 electron 程序
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}

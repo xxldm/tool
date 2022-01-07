@@ -3,8 +3,13 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit --skipLibCheck && vite build",
-    "preview": "vite preview"
+    "build": "tsc --noEmit --skipLibCheck && vite build"
+  },
+  "license": "SEE LICENSE IN <LICENSE>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxldm/tool.git",
+    "directory": "tool-web"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -37,7 +42,6 @@
     "prettier": "^2.5.1",
     "sass": "^1.45.2",
     "tailwindcss": "^3.0.10",
-    "ts-node": "^10.4.0",
     "typescript": "^4.4.4",
     "vite": "^2.7.2",
     "vue-eslint-parser": "^8.0.1"

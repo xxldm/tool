@@ -24,7 +24,7 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
     base: "./",
     server: {
       host: "::",
-      port: +process.env.PORT,
+      port: 80,
       strictPort: true,
     },
     resolve: {

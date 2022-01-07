@@ -1,0 +1,19 @@
+globals:
+  process: "readonly"
+  defineProps: "readonly"
+  defineEmits: "readonly"
+  defineExpose: "readonly"
+  withDefaults: "readonly"
+parserOptions:
+  parser: "@typescript-eslint/parser"
+  ecmaVersion: 2020
+  sourceType: "module"
+  ecmaFeatures:
+    jsx: true
+extends:
+  - "eslint:recommended"
+  - "prettier"
+  - "plugin:prettier/recommended"
+rules:
+  "prettier/prettier": "error"
+
