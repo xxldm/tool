@@ -21,19 +21,19 @@ jobs:
           yarn build
           echo 完成
 
+      - name: 暂存 html
+        uses: actions/upload-artifact@v2
+        with:
+          name: htmlCode
+          path: tool-web/dist
+
       - name: electron 写入 html
         run: |
           echo 开始
           echo 创建 dist 目录
           mkdir tool-electron/dist
           echo 复制 html 至 dist 目录
-          cp -ri tool-web/dist/* tool-electron/dist/
-
-      - name: 暂存 html
-        uses: actions/upload-artifact@v2
-        with:
-          name: htmlCode
-          path: tool-web/dist
+          cp -rf tool-web/dist/ tool-electron/dist/
 
       - name: 暂存 electron 代码
         uses: actions/upload-artifact@v2
