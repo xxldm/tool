@@ -26,14 +26,6 @@ jobs:
           echo 复制 html 至 dist 目录
           cp -rf tool-web/dist/ tool-electron/dist/
 
-      - name: test
-        run: |
-          echo 开始
-          cd tool-web
-          ls
-          cd dist
-          ls
-
       - name: 暂存 html
         uses: actions/upload-artifact@v2
         with:
@@ -59,11 +51,12 @@ jobs:
 
       - name: test
         run: |
-          echo 开始
+          echo ***开始***
           cd tool-web
           ls
           cd dist
           ls
+          echo ***结束***
 
       - name: 取出 electron 代码
         uses: actions/download-artifact@v2
@@ -71,14 +64,14 @@ jobs:
           name: electronCode
           path: ./
 
-
       - name: test
         run: |
-          echo 开始
-          cd tool-electron
+          echo ***开始***
+          cd tool-web
           ls
           cd dist
           ls
+          echo ***结束***
 
       - name: 安装依赖 & 编译 electron
         run: |
