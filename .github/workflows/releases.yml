@@ -52,9 +52,8 @@ jobs:
           name: htmlCode
           path: tool-web/dist
 
-      - name: 安装 git
-        run: |
-          npm install --global git
+      - name: 初始化git环境
+        uses: actions/checkout@v2
 
       - name: 上传至 github pages 分支
         uses: JamesIves/github-pages-deploy-action@4.1.1
@@ -74,7 +73,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: electronCode
-          path: tool-web/dist
+          path: ./
 
       - name: 安装 Node.js、NPM 和 Yarn
         uses: actions/setup-node@v1

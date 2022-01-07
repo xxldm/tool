@@ -1,4 +1,4 @@
-name: 正式版构建
+name: 提交编译测试
 on: [ push , pull_request ]
 jobs:
   build:
