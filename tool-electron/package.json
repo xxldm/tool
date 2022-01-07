@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "乡下来的工具箱",
   "main": "dist/main/index.js",
   "author": "乡下来的喵",
@@ -10,6 +10,11 @@
     "build:dir": "node -r ts-node/register src/script/build-main --env=production && electron-builder --dir"
   },
   "license": "SEE LICENSE IN <LICENSE>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxldm/tool.git",
+    "directory": "乡下来的工具箱"
+  },
   "build": {
     "appId": "xxldm_toolbox",
     "directories": {
