@@ -17,6 +17,7 @@
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
+        "provider": "github",
         "releaseType": "prerelease"
       }
     ],
