@@ -106,7 +106,7 @@ function initConfig() {
  * 创建窗口
  */
 function createWin() {
-  // 获取主屏幕
+  /*// 获取主屏幕
   let primaryDisplay = screen.getPrimaryDisplay();
   // 获取所有屏幕
   let displays = screen.getAllDisplays();
@@ -144,8 +144,8 @@ function createWin() {
         nodeIntegration: true,
         contextIsolation: false,
       },
-    });
-
+    });*/
+  win = new BrowserWindow();
     // 获取主体页面地址
     const URL = app.isPackaged
         ? `file://${join(baseUrl, "dist/index.html")}` // vite 构建后的静态文件地址
@@ -153,9 +153,9 @@ function createWin() {
 
     // 加载主体页面
     win?.loadURL(URL);
-  } else {
+  /*} else {
     app.quit();
-  }
+  }*/
 }
 
 /**
