@@ -15,6 +15,11 @@
   "build": {
     "appId": "xxldm_toolbox",
     "generateUpdatesFilesForAllChannels": true,
+    "publish": [
+      {
+        "releaseType": "prerelease"
+      }
+    ],
     "directories": {
       "output": "release"
     },
@@ -28,7 +33,7 @@
     },
     "win": {
       "icon": "src/public/favicon.ico",
-      "artifactName": "${productName}_${version}.${ext}",
+      "artifactName": "${productName}-v${version}.${ext}",
       "target": [
         {
           "target": "nsis",
