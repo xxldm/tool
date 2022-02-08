@@ -4,8 +4,8 @@ on:
     tags-ignore:
       - "v*.*.*"
   pull_request:
-    branches:
-      - "dev"
+    tags-ignore:
+      - "v*.*.*"
 
 jobs:
   build:
