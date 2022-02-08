@@ -2,12 +2,13 @@
  * electron 主文件
  */
 import {join} from "path";
-import {app, BrowserWindow, ipcMain, Menu, screen, Tray,} from "electron";
+import {app, BrowserWindow, ipcMain, Menu, Tray,} from "electron";
 import dotenv from "dotenv-flow";
 import minimist, {ParsedArgs} from "minimist";
 import ElectronStore from "electron-store";
 import log from "electron-log";
 import {autoUpdater} from "electron-updater";
+import MenuItem = Electron.MenuItem;
 
 // 存储操作对象
 let store: ElectronStore;
@@ -31,9 +32,10 @@ app.whenReady().then(ready);
  */
 function init() {
   // 开启自动更新
-  log.transports.file.level = "debug"
-  autoUpdater.logger = log
-  autoUpdater.checkForUpdatesAndNotify()
+  log.transports.file.level = "debug";
+  autoUpdater.logger = log;
+  autoUpdater.channel = "beta";
+  autoUpdater.checkForUpdatesAndNotify();
   // 创建electron-store
   store = new ElectronStore();
   // 获取参数
@@ -77,10 +79,10 @@ function initIpc() {
   // 退出程序
   ipcMain.on("quit", () => app.quit());
   // 对窗口的操作
-  ipcMain.on("setFocusable", (event, isFocusable: boolean) =>
+  ipcMain.on("setFocusable", (event, isFocusable) =>
       win.setFocusable(isFocusable)
   );
-  ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop: boolean) =>
+  ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop) =>
       win.setAlwaysOnTop(isAlwaysOnTop)
   );
   // 配置文件读取
@@ -185,7 +187,7 @@ function createMenu() {
         {
           label: "切换开发者工具",
           accelerator: "F12",
-          click: function (item, focusedWindow) {
+          click: function (item: MenuItem, focusedWindow: (BrowserWindow) | (undefined)) {
             if (focusedWindow) {
               focusedWindow.webContents.toggleDevTools();
             }
