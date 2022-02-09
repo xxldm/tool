@@ -15,6 +15,12 @@
   "build": {
     "appId": "xxldm.toolbox",
     "generateUpdatesFilesForAllChannels": true,
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "prerelease"
+      }
+    ],
     "directories": {
       "output": "release"
     },
