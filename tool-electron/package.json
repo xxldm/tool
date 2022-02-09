@@ -14,6 +14,9 @@
   "homepage": "https://xxldm.github.io/tool",
   "build": {
     "appId": "xxldm_toolbox",
+    "releaseInfo": {
+      "releaseName": "v${version}"
+    },
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
