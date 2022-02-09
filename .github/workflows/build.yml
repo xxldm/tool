@@ -2,12 +2,12 @@ name: 提交编译测试
 on:
   push:
     branches:
-      - "main"
+      - "dev"
     tags-ignore:
       - "v*.*.*"
   pull_request:
     branches:
-      - "main"
+      - "dev"
     tags-ignore:
       - "v*.*.*"
 
