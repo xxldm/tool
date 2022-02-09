@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "乡下来的工具箱",
   "main": "dist/main/index.js",
   "author": "乡下来的喵",
@@ -14,6 +14,9 @@
   "homepage": "https://xxldm.github.io/tool",
   "build": {
     "appId": "xxldm_toolbox",
+    "releaseInfo": {
+      "releaseName": "v${version}"
+    },
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
