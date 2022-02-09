@@ -1,14 +1,21 @@
 /**
  * electron 主文件
  */
-import {join} from "path";
-import {app, BrowserWindow, ipcMain, Menu, Tray,} from "electron";
+import { join } from "path";
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  Tray,
+  dialog,
+  MessageBoxReturnValue,
+  MenuItem,
+} from "electron";
 import dotenv from "dotenv-flow";
-import minimist, {ParsedArgs} from "minimist";
+import minimist, { ParsedArgs } from "minimist";
 import ElectronStore from "electron-store";
-import log from "electron-log";
-import {autoUpdater, UpdateCheckResult} from "electron-updater";
-import { Notification } from "electron/main";
+import { autoUpdater } from "electron-updater";
 
 // 存储操作对象
 let store: ElectronStore;
@@ -23,6 +30,9 @@ let win: BrowserWindow;
 // 托盘图标对象
 let tray: Tray;
 
+const OPEN_AT_LOGIN_KEY = "openAtLogin";
+const UPDATE_CHANNEL_LOGIN_KEY = "updateChannel";
+
 init();
 
 app.whenReady().then(ready);
@@ -31,41 +41,26 @@ app.whenReady().then(ready);
  * 初始化
  */
 function init() {
-  // 开启自动更新
-  log.transports.file.level = "debug";
-  autoUpdater.logger = log;
-  autoUpdater.channel = "beta";
-  autoUpdater.checkForUpdates().then((it:UpdateCheckResult) => {
-    const downloadPromise = it.downloadPromise
-    if (downloadPromise == null) {
-      return
-    }
-
-    downloadPromise.then(() => {
-      new Notification({
-        title: '新版本提醒',
-        body: `${autoUpdater.app.name} '新版本' ${
-            it.updateInfo.version
-        } '将会在系统关闭后自动更新'`,
-      }).show()
-    })
-  })
   // 创建electron-store
   store = new ElectronStore();
   // 获取参数
+  // @ts-ignore
   argv = minimist(process.argv.slice(2));
   // 获取应用根目录
   baseUrl = app.isPackaged
-      ? app.getAppPath()
-      : join(app.getAppPath(), "../../");
+    ? app.getAppPath()
+    : join(app.getAppPath(), "../../");
   // 获取托盘栏图标目录
   iconPath = app.isPackaged
-      ? join(baseUrl, "../app/src/public/favicon.png")
-      : join(baseUrl, "src/public/favicon.png");
+    ? join(baseUrl, "../app/src/public/favicon.png")
+    : join(baseUrl, "src/public/favicon.png");
   // 读取配置文件
-  dotenv.config({path: baseUrl, node_env: argv.env});
+  dotenv.config({ path: baseUrl, node_env: argv.env });
   initConfig();
   initIpc();
+  initUpdater();
+  // 检查更新
+  autoUpdater.checkForUpdates();
 }
 
 /**
@@ -84,27 +79,27 @@ function ready() {
  */
 function initIpc() {
   // 开机启动开关
-  ipcMain.on("openAtLogin", async (event, args) => {
+  ipcMain.on(OPEN_AT_LOGIN_KEY, (event, args: any) => {
     app.setLoginItemSettings({
       openAtLogin: args,
     });
-    store.set("openAtLogin", args);
+    store.set(OPEN_AT_LOGIN_KEY, args);
   });
   // 退出程序
   ipcMain.on("quit", () => app.quit());
   // 对窗口的操作
-  ipcMain.on("setFocusable", (event, isFocusable) =>
-      win.setFocusable(isFocusable)
+  ipcMain.on("setFocusable", (event, isFocusable: any) =>
+    win.setFocusable(isFocusable)
   );
-  ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop) =>
-      win.setAlwaysOnTop(isAlwaysOnTop)
+  ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop: any) =>
+    win.setAlwaysOnTop(isAlwaysOnTop)
   );
   // 配置文件读取
-  ipcMain.on("electronStoreGet", (event, arg) => {
+  ipcMain.on("electronStoreGet", (event, arg: any) => {
     event.returnValue = store.get(arg[0], arg[1]);
   });
   // 配置文件写入
-  ipcMain.on("electronStoreSet", (event, arg) => {
+  ipcMain.on("electronStoreSet", (event, arg: any) => {
     store.set(arg[0], arg[1]);
   });
 }
@@ -114,8 +109,64 @@ function initIpc() {
  */
 function initConfig() {
   // 以防从其余地方干掉了注册表，但设置项没有重置，每次打开读取注册表，重置设置项
-  const {openAtLogin} = app.getLoginItemSettings();
-  store.set("openAtLogin", openAtLogin);
+  const { openAtLogin } = app.getLoginItemSettings();
+  store.set(OPEN_AT_LOGIN_KEY, openAtLogin);
+}
+
+function initUpdater() {
+  autoUpdater.channel = store.get(UPDATE_CHANNEL_LOGIN_KEY, "beta");
+  autoUpdater.autoDownload = false;
+
+  autoUpdater.on("error", (error: any) => {
+    dialog.showErrorBox(
+      "Error: ",
+      error == null ? "unknown" : (error.stack || error).toString()
+    );
+  });
+
+  autoUpdater.on("update-available", (updateInfo: any) => {
+    dialog
+      .showMessageBox({
+        type: "info",
+        title: "检查更新",
+        message: `新版本[${updateInfo.version}]已发布是否更新？`,
+        buttons: ["更新", "下次一定", "跳过这个版本"],
+      })
+      .then((buttonIndex: MessageBoxReturnValue) => {
+        if (buttonIndex.response === 0) {
+          autoUpdater.downloadUpdate();
+        }
+      });
+  });
+
+  autoUpdater.on("update-not-available", () => {
+    dialog.showMessageBox({
+      title: "检查更新",
+      message: "当前版本已是最新版本！",
+    });
+  });
+
+  autoUpdater.on("update-downloaded", () => {
+    dialog
+      .showMessageBox({
+        title: "检查更新",
+        message: "正在下载更新。。。",
+      })
+      .then(() => {
+        dialog
+          .showMessageBox({
+            type: "info",
+            title: "检查更新",
+            message: "新版本已下载完毕！",
+            buttons: ["重启", "下次一定"],
+          })
+          .then((buttonIndex: MessageBoxReturnValue) => {
+            if (buttonIndex.response === 0) {
+              setImmediate(() => autoUpdater.quitAndInstall());
+            }
+          });
+      });
+  });
 }
 
 /**
@@ -162,13 +213,13 @@ function createWin() {
       },
     });*/
   win = new BrowserWindow();
-    // 获取主体页面地址
-    const URL = app.isPackaged
-        ? `file://${join(baseUrl, "dist/index.html")}` // vite 构建后的静态文件地址
-        : `http://localhost:80`; // vite 启动的服务器地址
+  // 获取主体页面地址
+  const URL = app.isPackaged
+    ? `file://${join(baseUrl, "dist/index.html")}` // vite 构建后的静态文件地址
+    : `http://localhost:80`; // vite 启动的服务器地址
 
-    // 加载主体页面
-    win?.loadURL(URL);
+  // 加载主体页面
+  win?.loadURL(URL);
   /*} else {
     app.quit();
   }*/
@@ -197,16 +248,19 @@ function createTray() {
  */
 function createMenu() {
   Menu.setApplicationMenu(
-      Menu.buildFromTemplate([
-        {
-          label: "切换开发者工具",
-          accelerator: "F12",
-          click: function (item: Electron.MenuItem, focusedWindow: (BrowserWindow) | (undefined)) {
-            if (focusedWindow) {
-              focusedWindow.webContents.toggleDevTools();
-            }
-          },
+    Menu.buildFromTemplate([
+      {
+        label: "切换开发者工具",
+        accelerator: "F12",
+        click: function (
+          item: MenuItem,
+          focusedWindow: BrowserWindow | undefined
+        ) {
+          if (focusedWindow) {
+            focusedWindow.webContents.toggleDevTools();
+          }
         },
-      ])
+      },
+    ])
   );
 }

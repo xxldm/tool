@@ -1,10 +1,10 @@
-import {resolve} from "path";
-import {RollupOptions} from "rollup";
+import { resolve } from "path";
+import { RollupOptions } from "rollup";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import json from "@rollup/plugin-json";
-import {builtins} from "./utils";
+import { builtins } from "./utils";
 
 export default (env = "production") => {
   const options: RollupOptions = {

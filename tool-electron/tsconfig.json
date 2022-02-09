@@ -7,7 +7,7 @@
   },
   "compilerOptions": {
     // 编译输出目标 ES 版本
-    "target": "esnext",
+    "target": "ESNext",
     // 采用的模块系统
     "module": "UMD",
     // 如何处理模块
