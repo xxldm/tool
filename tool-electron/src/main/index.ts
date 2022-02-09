@@ -9,6 +9,7 @@ import ElectronStore from "electron-store";
 import log from "electron-log";
 import {autoUpdater} from "electron-updater";
 import MenuItem = Electron.MenuItem;
+import { Notification } from "electron/main";
 
 // 存储操作对象
 let store: ElectronStore;
@@ -35,7 +36,21 @@ function init() {
   log.transports.file.level = "debug";
   autoUpdater.logger = log;
   autoUpdater.channel = "beta";
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdates().then(it => {
+    const downloadPromise = it.downloadPromise
+    if (downloadPromise == null) {
+      return
+    }
+
+    downloadPromise.then(() => {
+      new Notification({
+        title: '新版本提醒',
+        body: `${autoUpdater.app.name} '新版本' ${
+            it.updateInfo.version
+        } '将会在系统关闭后自动更新'`,
+      }).show()
+    })
+  })
   // 创建electron-store
   store = new ElectronStore();
   // 获取参数
