@@ -7,8 +7,7 @@ import dotenv from "dotenv-flow";
 import minimist, {ParsedArgs} from "minimist";
 import ElectronStore from "electron-store";
 import log from "electron-log";
-import {autoUpdater} from "electron-updater";
-import MenuItem = Electron.MenuItem;
+import {autoUpdater, UpdateCheckResult} from "electron-updater";
 import { Notification } from "electron/main";
 
 // 存储操作对象
@@ -36,7 +35,7 @@ function init() {
   log.transports.file.level = "debug";
   autoUpdater.logger = log;
   autoUpdater.channel = "beta";
-  autoUpdater.checkForUpdates().then(it => {
+  autoUpdater.checkForUpdates().then((it:UpdateCheckResult) => {
     const downloadPromise = it.downloadPromise
     if (downloadPromise == null) {
       return
@@ -202,7 +201,7 @@ function createMenu() {
         {
           label: "切换开发者工具",
           accelerator: "F12",
-          click: function (item: MenuItem, focusedWindow: (BrowserWindow) | (undefined)) {
+          click: function (item: Electron.MenuItem, focusedWindow: (BrowserWindow) | (undefined)) {
             if (focusedWindow) {
               focusedWindow.webContents.toggleDevTools();
             }
