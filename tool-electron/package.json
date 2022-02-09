@@ -9,6 +9,9 @@
     "build": "node -r ts-node/register src/script/build-main --env=production",
     "build:dir": "node -r ts-node/register src/script/build-main --env=production && electron-builder --dir"
   },
+  "engines": {
+    "node": ">=9.3.0"
+  },
   "license": "SEE LICENSE IN <LICENSE>",
   "repository": "github:xxldm/tool",
   "homepage": "https://xxldm.github.io/tool",
@@ -74,6 +77,7 @@
     "electron-store": "^8.0.1",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "minimist": "^1.2.5",
     "ora": "^5.4.1",
