@@ -119,8 +119,8 @@ function initUpdater() {
 
   autoUpdater.on("error", (error: any) => {
     dialog.showErrorBox(
-      "Error: ",
-      error == null ? "unknown" : (error.stack || error).toString()
+      "错误: ",
+      error == null ? "未知" : (error.stack || error).toString()
     );
   });
 
@@ -139,32 +139,25 @@ function initUpdater() {
       });
   });
 
-  autoUpdater.on("update-not-available", () => {
-    dialog.showMessageBox({
-      title: "检查更新",
-      message: "当前版本已是最新版本！",
-    });
-  });
+  // autoUpdater.on("update-not-available", () => {
+  //   dialog.showMessageBox({
+  //     title: "检查更新",
+  //     message: "当前版本已是最新版本！",
+  //   });
+  // });
 
   autoUpdater.on("update-downloaded", () => {
     dialog
       .showMessageBox({
+        type: "info",
         title: "检查更新",
-        message: "正在下载更新。。。",
+        message: "新版本已下载完毕！",
+        buttons: ["重启", "稍后手动重启"],
       })
-      .then(() => {
-        dialog
-          .showMessageBox({
-            type: "info",
-            title: "检查更新",
-            message: "新版本已下载完毕！",
-            buttons: ["重启", "下次一定"],
-          })
-          .then((buttonIndex: MessageBoxReturnValue) => {
-            if (buttonIndex.response === 0) {
-              setImmediate(() => autoUpdater.quitAndInstall());
-            }
-          });
+      .then((buttonIndex: MessageBoxReturnValue) => {
+        if (buttonIndex.response === 0) {
+          setImmediate(() => autoUpdater.quitAndInstall(true, true));
+        }
       });
   });
 }

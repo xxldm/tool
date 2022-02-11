@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.1",
   "description": "乡下来的工具箱",
   "main": "dist/main/index.js",
   "author": "乡下来的喵",
@@ -21,7 +21,7 @@
     "publish": [
       {
         "provider": "github",
-        "releaseType": "prerelease"
+        "releaseType": "release"
       }
     ],
     "directories": {
@@ -55,7 +55,7 @@
     },
     "nsis": {
       "oneClick": false,
-      "perMachine": false,
+      "perMachine": true,
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": false
     }
