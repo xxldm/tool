@@ -18,7 +18,6 @@
   "homepage": "https://xxldm.github.io/tool",
   "build": {
     "appId": "xxldm.toolbox",
-    "compression": "maximum",
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
