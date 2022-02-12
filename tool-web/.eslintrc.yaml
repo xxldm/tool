@@ -32,9 +32,10 @@ rules:
 overrides:
   - files: "*.vue"
     rules:
-      no-unused-vars: "off"
-      no-unused-labels: "off"
-      no-undef: "off"
+      vue/no-setup-props-destructure: off
+#      no-unused-vars: "off"
+#      no-unused-labels: "off"
+#      no-undef: "off"
 settings:
   vue-i18n:
     localeDir:

@@ -10,9 +10,7 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
   return {
     plugins: [
       vue({
-        script: {
-          refSugar: true,
-        },
+        reactivityTransform: true,
       }),
       vueI18n({
         runtimeOnly: false,

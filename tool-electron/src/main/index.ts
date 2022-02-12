@@ -5,6 +5,7 @@ import { join } from "path";
 import {
   app,
   BrowserWindow,
+  screen,
   ipcMain,
   Menu,
   Tray,
@@ -12,17 +13,11 @@ import {
   MessageBoxReturnValue,
   MenuItem,
 } from "electron";
-import dotenv from "dotenv-flow";
-import minimist, { ParsedArgs } from "minimist";
 import ElectronStore from "electron-store";
 import { autoUpdater } from "electron-updater";
 
 // 存储操作对象
 let store: ElectronStore;
-// 参数对象
-let argv: ParsedArgs;
-// 应用根目录
-let baseUrl: string;
 // 托盘栏图标目录
 let iconPath: string;
 // 窗口对象
@@ -36,31 +31,23 @@ const UPDATE_CHANNEL_LOGIN_KEY = "updateChannel";
 init();
 
 app.whenReady().then(ready);
-
 /**
  * 初始化
  */
 function init() {
   // 创建electron-store
   store = new ElectronStore();
-  // 获取参数
-  // @ts-ignore
-  argv = minimist(process.argv.slice(2));
-  // 获取应用根目录
-  baseUrl = app.isPackaged
-    ? app.getAppPath()
-    : join(app.getAppPath(), "../../");
-  // 获取托盘栏图标目录
+  // 获取托盘栏图标
   iconPath = app.isPackaged
-    ? join(baseUrl, "../app/src/public/favicon.png")
-    : join(baseUrl, "src/public/favicon.png");
-  // 读取配置文件
-  dotenv.config({ path: baseUrl, node_env: argv.env });
+    ? "app://dist/favicon.png"
+    : join(app.getAppPath(), "../../favicon.png");
   initConfig();
   initIpc();
-  initUpdater();
-  // 检查更新
-  autoUpdater.checkForUpdates();
+  if (app.isPackaged) {
+    initUpdater();
+    // 检查更新
+    autoUpdater.checkForUpdates();
+  }
 }
 
 /**
@@ -68,7 +55,7 @@ function init() {
  */
 function ready() {
   // 获取用户文件（配置文件、等）存放目录
-  console.log(app.getPath("userData"));
+  console.log("[index.ts]", app.getPath("userData"));
   createWin();
   createTray();
   createMenu();
@@ -87,10 +74,11 @@ function initIpc() {
   });
   // 退出程序
   ipcMain.on("quit", () => app.quit());
-  // 对窗口的操作
+  // 对窗口能否获取焦点
   ipcMain.on("setFocusable", (event, isFocusable: any) =>
     win.setFocusable(isFocusable)
   );
+  // 窗口是否置顶
   ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop: any) =>
     win.setAlwaysOnTop(isAlwaysOnTop)
   );
@@ -166,56 +154,42 @@ function initUpdater() {
  * 创建窗口
  */
 function createWin() {
-  /*// 获取主屏幕
-  let primaryDisplay = screen.getPrimaryDisplay();
-  // 获取所有屏幕
-  let displays = screen.getAllDisplays();
-  // 取第二屏幕
-  let externalDisplay = displays.find(
-      (display) => display.id !== primaryDisplay.id
-  );
-  // 如果有第二屏幕
-  if (externalDisplay) {
-    // 创建浏览器窗口
-    win = new BrowserWindow({
-      x: externalDisplay.bounds.x,
-      y: externalDisplay.bounds.y,
-      width: externalDisplay.bounds.width,
-      height: externalDisplay.bounds.height,
-      // 改变大小
-      resizable: false,
-      // 移动位置
-      movable: false,
-      // 最小化
-      minimizable: false,
-      // 最大化
-      maximizable: false,
-      // 无边框
-      frame: false,
-      // 关闭任务栏中显示程序
-      skipTaskbar: true,
-      // 禁止F11这种系统全屏
-      fullscreenable: false,
-      // 可以获取焦点
-      focusable: store.get("isFocusable", true),
-      // 置顶
-      alwaysOnTop: store.get("isAlwaysOnTop", false),
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-      },
-    });*/
-  win = new BrowserWindow();
+  // 创建浏览器窗口
+  win = new BrowserWindow({
+    // x: externalDisplay.bounds.x,
+    // y: externalDisplay.bounds.y,
+    // width: externalDisplay.bounds.width,
+    // height: externalDisplay.bounds.height,
+    // 改变大小
+    // resizable: false,
+    // 移动位置
+    // movable: false,
+    // 最小化
+    // minimizable: false,
+    // 最大化
+    // maximizable: false,
+    // 边框
+    // frame: false,
+    // 关闭任务栏中显示程序
+    // skipTaskbar: true,
+    // 禁止F11这种系统全屏
+    fullscreenable: false,
+    // 可以获取焦点
+    focusable: store.get("isFocusable", true),
+    // 置顶
+    alwaysOnTop: store.get("isAlwaysOnTop", false),
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
   // 获取主体页面地址
   const URL = app.isPackaged
-    ? `file://${join(baseUrl, "dist/index.html")}` // vite 构建后的静态文件地址
+    ? `app://dist/index.html` // vite 构建后的静态文件地址
     : `http://localhost:80`; // vite 启动的服务器地址
 
   // 加载主体页面
-  win?.loadURL(URL);
-  /*} else {
-    app.quit();
-  }*/
+  win.loadURL(URL);
 }
 
 /**
@@ -250,7 +224,7 @@ function createMenu() {
           focusedWindow: BrowserWindow | undefined
         ) {
           if (focusedWindow) {
-            focusedWindow.webContents.toggleDevTools();
+            focusedWindow.webContents.openDevTools();
           }
         },
       },

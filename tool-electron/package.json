@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.0.1",
+  "version": "0.0.2-beta.1",
   "description": "乡下来的工具箱",
   "main": "dist/main/index.js",
   "author": "乡下来的喵",
@@ -17,11 +17,12 @@
   "homepage": "https://xxldm.github.io/tool",
   "build": {
     "appId": "xxldm.toolbox",
+    "compression": "maximum",
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
         "provider": "github",
-        "releaseType": "release"
+        "releaseType": "prerelease"
       }
     ],
     "directories": {
@@ -31,12 +32,8 @@
       "!node_modules",
       "dist/**"
     ],
-    "extraResources": {
-      "from": "src/public",
-      "to": "app/src/public"
-    },
     "win": {
-      "icon": "src/public/favicon.ico",
+      "icon": "favicon.png",
       "artifactName": "${productName}-v${version}.${ext}",
       "target": [
         {
@@ -66,7 +63,6 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "chalk": "^4.1.2",
-    "dotenv-flow": "^3.2.0",
     "electron": "^16.0.6",
     "electron-builder": "^22.14.5",
     "electron-store": "^8.0.1",

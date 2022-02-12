@@ -8,14 +8,12 @@ import minimist from "minimist";
 import chalk from "chalk";
 import ora from "ora";
 import electron from "electron";
-import dotenv from "dotenv-flow";
 import { waitOn } from "./utils";
 import options from "./rollup.config";
 import { main } from "../../package.json";
 
 // @ts-ignore
 const argv = minimist(process.argv.slice(2));
-dotenv.config({ path: resolve(), node_env: argv.env });
 
 const opts = options(argv.env);
 const TAG = "[build-main.ts]";

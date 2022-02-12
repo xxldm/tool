@@ -1650,22 +1650,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-flow@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "dotenv-flow@npm:3.2.0"
-  dependencies:
-    dotenv: ^8.0.0
-  checksum: 8e34ea8f5cb216acb0f9cc602752dceef6e1c0b52c39045d6b92fadbefcbfecaf0cc868d3e115c9764860293d62d0bb31d46cfa41d29cb9fc7039797e20de03e
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^8.0.0":
-  version: 8.6.0
-  resolution: "dotenv@npm:8.6.0"
-  checksum: 38e902c80b0666ab59e9310a3d24ed237029a7ce34d976796349765ac96b8d769f6df19090f1f471b77a25ca391971efde8a1ea63bb83111bd8bec8e5cc9b2cd
-  languageName: node
-  linkType: hard
-
 "dotenv@npm:^9.0.2":
   version: 9.0.2
   resolution: "dotenv@npm:9.0.2"
@@ -4320,7 +4304,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.9.0
     "@typescript-eslint/parser": ^5.9.0
     chalk: ^4.1.2
-    dotenv-flow: ^3.2.0
     electron: ^16.0.6
     electron-builder: ^22.14.5
     electron-log: ^4.4.4
