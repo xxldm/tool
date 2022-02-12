@@ -51,7 +51,6 @@
   ],
   // ts 排除的文件
   "exclude": [
-    ".yarn",
-    "src/render/public"
+    ".yarn"
   ]
 }

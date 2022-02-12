@@ -5,7 +5,6 @@ import { join } from "path";
 import {
   app,
   BrowserWindow,
-  screen,
   ipcMain,
   Menu,
   Tray,
@@ -26,7 +25,7 @@ let win: BrowserWindow;
 let tray: Tray;
 
 const OPEN_AT_LOGIN_KEY = "openAtLogin";
-const UPDATE_CHANNEL_LOGIN_KEY = "updateChannel";
+const UPDATE_CHANNEL_KEY = "updateChannel";
 
 init();
 
@@ -39,7 +38,7 @@ function init() {
   store = new ElectronStore();
   // 获取托盘栏图标
   iconPath = app.isPackaged
-    ? "app://dist/favicon.png"
+    ? join(app.getAppPath(), "dist/favicon.png")
     : join(app.getAppPath(), "../../favicon.png");
   initConfig();
   initIpc();
@@ -102,7 +101,7 @@ function initConfig() {
 }
 
 function initUpdater() {
-  autoUpdater.channel = store.get(UPDATE_CHANNEL_LOGIN_KEY, "beta");
+  autoUpdater.channel = store.get(UPDATE_CHANNEL_KEY, "beta");
   autoUpdater.autoDownload = false;
 
   autoUpdater.on("error", (error: any) => {
@@ -185,7 +184,7 @@ function createWin() {
   });
   // 获取主体页面地址
   const URL = app.isPackaged
-    ? `app://dist/index.html` // vite 构建后的静态文件地址
+    ? `file://${join(app.getAppPath(), "dist/index.html")}` // vite 构建后的静态文件地址
     : `http://localhost:80`; // vite 启动的服务器地址
 
   // 加载主体页面
