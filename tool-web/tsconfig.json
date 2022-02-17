@@ -9,7 +9,7 @@
     // 编译输出目标 ES 版本
     "target": "esnext",
     // 采用的模块系统
-    "module": "commonjs",
+    "module": "ESNext",
     // 如何处理模块
     "moduleResolution": "node",
     // 以严格模式解析
@@ -25,6 +25,7 @@
     // 给错误和消息设置样式，使用颜色和上下文。
     "pretty": true,
     "types": [
+      "node",
       "vite/client",
       "@intlify/vite-plugin-vue-i18n/client"
     ],
@@ -41,12 +42,7 @@
     "isolatedModules": true,
     // 指定特殊模块的路径
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
-      "@*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
     },
     "lib": [
       "esnext",
@@ -56,20 +52,14 @@
     ],
     "allowSyntheticDefaultImports": true
   },
-  "files": [
-    "typings/shims-vue.d.ts",
-    "typings/assets.d.ts"
-  ],
   "include": [
     "src/**/*.js",
     "src/**/*.ts",
-    "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
   // ts 排除的文件
   "exclude": [
-    ".yarn",
-    "src/public"
+    "src/public/*"
   ]
 }
