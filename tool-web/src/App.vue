@@ -1,5 +1,7 @@
 <template>
-  <div>asdwkjdqaoiwjud</div>
+  <router-view v-slot="{ Component }">
+    <component :is="Component" />
+  </router-view>
 </template>
 
 <script lang="ts" setup></script>

@@ -1,0 +1,81 @@
+appName: "工具箱"
+add: "添加"
+del: "删除"
+yes: "是"
+no: "否"
+title: "标题"
+submit: "提交"
+confirm: "确定"
+cancel: "取消"
+operating: "操作"
+closeApp: "关闭应用"
+date:
+  unit:
+    second: "秒"
+    minute: "分钟"
+    hour: "小时"
+    day: "天"
+    month: "个月"
+    year: "年"
+error:
+  noSubmit: "该组件不存在提交方法，请联系管理员！"
+  unknown: "未知错误"
+warning:
+  noSaveByExit: "现在退出不会保存当前填写的内容，确定要退出？"
+menu:
+  goMain: "回首页"
+  main: "首页"
+  login: "登录"
+  settings: "设置"
+  notFound: "**地图，持续为您导航~"
+  test: "测试"
+  bot:
+    botName: "机器人"
+    botList: "@:menu.bot.botName{'列表'}"
+    botList2: "@:menu.bot.botName{'列表2'}"
+  calendar:
+    calendarName: "日历"
+  user:
+    userName: "用户"
+    userList: "@:menu.user.userName{'列表'}"
+header:
+  signOut: "退出登录"
+  settings: "设置"
+  closeApp: "关闭应用"
+settings:
+  changeLocale: "切换成功，部分文字、功能需要重启后生效！"
+  openAtLoginLabel: "开机启动"
+  system: "系统设置"
+  shortcut: "右上角快捷按钮显示设置"
+  showDarkButton: "暗黑模式"
+  showLocaleButton: "语言"
+  showTopButton: "置顶"
+  showFocusLockButton: "焦点锁"
+  showAppLockButton: "应用锁"
+  focusLockTooltip: "该应用在系统中是否可以获取焦点（{yn}）"
+  alwaysOnTopTooltip: "是否置顶（{yn}）"
+  showEditButton: "编辑模式按钮"
+main:
+  view:
+    date: "日期"
+    empty: "空"
+    chronograph: "计时器"
+    countdown:
+      horizontal: "倒计时（水平）"
+      vertical: "倒计时（垂直）"
+  addViewComponent: "添加组件"
+  order: "顺序"
+  colnum: "列数"
+  colSpan: "列数"
+  rowSpan: "行数"
+  center: "居中"
+  noBorder: "无框"
+  rowHeight: "行高"
+forms:
+  chronograph: "计时器管理"
+  countdown: "倒计时管理"
+chronograph:
+  content: "文本"
+  diff: "时间差值"
+  startTime: "开始时间"
+  refresh: "快速重置"

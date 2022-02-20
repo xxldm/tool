@@ -11,22 +11,22 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export default ({ mode }: { mode: string }): UserConfigExport => {
   config({ path: resolve(), node_env: mode });
   return {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/styles/element-variables.scss" as *;`,
+        },
+      },
+    },
     plugins: [
       vue({
         reactivityTransform: true,
       }),
       vueI18n({
-        runtimeOnly: false,
         defaultSFCLang: "yml",
         include: resolve("src/locales/**"),
       }),
       AutoImport({
-        include: [
-          /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-          /\.vue$/,
-          /\.vue\?vue/, // .vue
-          /\.md$/, // .md
-        ],
         dts: "@types/auto-imports.d.ts",
         imports: [
           "vue",
@@ -52,13 +52,13 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
         eslintrc: {
           enabled: true, // Default `false`
           filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
-          globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+          globalsPropValue: "readonly", // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
         },
-        resolvers: [ElementPlusResolver()],
       }),
       Components({
+        dirs: ["components", "layout/components"],
         dts: "@types/components.d.ts",
-        resolvers: [ElementPlusResolver()],
+        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
       }),
     ],
     root: resolve("src"),
@@ -71,7 +71,6 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
     resolve: {
       alias: {
         "@": resolve("src"),
-        "vue-i18n": `vue-i18n/dist/vue-i18n.cjs.prod.js`,
       },
     },
     build: {
