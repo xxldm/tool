@@ -1,10 +1,6 @@
 import Layout from "@/layout/MyLayout.vue";
-import {
-  createRouter,
-  createWebHistory,
-  RouteRecordName,
-  RouteRecordRaw,
-} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+import type { RouteRecordName, RouteRecordRaw } from "vue-router";
 import { getTranslation } from "@/i18n";
 import { getRandomAnimationClass } from "@/utils/AnimationClassUtil";
 import { useUserStore } from "@/stores/user";
@@ -34,6 +30,19 @@ const routes: RouteRecordRaw[] = [
         meta: { showEditButton: true },
       },
     ],
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Layout,
+    children: [
+      {
+        path: "/settings",
+        component: () => import("@/views/system/Settings.vue"),
+        name: "settings",
+      },
+    ],
+    meta: { hidden: true },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -110,7 +119,7 @@ const filterRoute = (routes: RouteRecordRaw[], userRuleIds: number[]) => {
   });
 };
 
-const initUserRoute = (userRuleIds: number[]) => {
+export const initUserRoute = (userRuleIds: number[]) => {
   const userStore = useUserStore();
   userStore.routes = routes;
   for (const route of filterRoute(extensionRoutes, userRuleIds)) {
@@ -120,7 +129,3 @@ const initUserRoute = (userRuleIds: number[]) => {
     }
   }
 };
-
-router.isReady().then(() => {
-  initUserRoute([1]);
-});

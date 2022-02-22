@@ -1,15 +1,19 @@
-import { config, elApp, elWin } from "@/utils/SettingUtil";
+import { config, elApp, elWin, isElectron } from "@/utils/SettingUtil";
+import { setLocale } from "@/i18n";
 
 export const useSettingStore = defineStore("setting", {
   state: () => ({
+    electron: isElectron,
+    server: config.get("server"),
     edit: false,
+    appLock: false,
     openAtLogin: config.get("openAtLogin", false),
     locale: config.get("locale", "zh-cn"),
-    dark: config.get("dark", true),
+    dark: config.get("dark", false),
     focusable: config.get("focusable", true),
     alwaysOnTop: config.get("alwaysOnTop", false),
     showShortcutButtons: config.get("showShortcutButtons", {
-      dark: true,
+      dark: false,
       locale: true,
       focusLock: true,
       top: true,
@@ -18,7 +22,11 @@ export const useSettingStore = defineStore("setting", {
     }),
   }),
   getters: {
+    isElectron: (state) => state.electron,
+    isServer: (state) => state.server !== undefined,
     isEdit: (state) => state.edit,
+    isAppLock: (state) => state.appLock,
+    isOpenAtLogin: (state) => state.openAtLogin,
     isDark: (state) => state.dark,
     isFocusable: (state) => state.focusable,
     isAlwaysOnTop: (state) => state.alwaysOnTop,
@@ -45,6 +53,12 @@ export const useSettingStore = defineStore("setting", {
     setShowShortcutButtons(key: string, isShow: boolean) {
       this.showShortcutButtons[key] = isShow;
       config.set("showShortcutButtons", this.showShortcutButtons);
+    },
+    setLocal(locale: string) {
+      setLocale(locale).then(() => {
+        this.locale = locale;
+        config.set("locale", locale);
+      });
     },
   },
 });

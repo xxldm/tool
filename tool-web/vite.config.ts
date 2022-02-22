@@ -1,15 +1,16 @@
-import { UserConfigExport } from "vite";
+import type { UserConfigExport } from "vite";
 import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
-import { config } from "dotenv-flow";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default ({ mode }: { mode: string }): UserConfigExport => {
-  config({ path: resolve(), node_env: mode });
+  console.log(mode);
   return {
     css: {
       preprocessorOptions: {
@@ -54,11 +55,21 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
           filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
           globalsPropValue: "readonly", // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
         },
+        // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
+        resolvers: [ElementPlusResolver()],
       }),
       Components({
         dirs: ["components", "layout/components"],
         dts: "@types/components.d.ts",
-        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+        resolvers: [
+          ElementPlusResolver({ importStyle: "sass" }),
+          IconsResolver({
+            prefix: false,
+          }),
+        ],
+      }),
+      Icons({
+        autoInstall: true,
       }),
     ],
     root: resolve("src"),
@@ -77,6 +88,9 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
       outDir: resolve("dist"),
       emptyOutDir: true,
       sourcemap: false,
+    },
+    optimizeDeps: {
+      include: ["vue", "pinia", "axios"],
     },
   };
 };

@@ -4,7 +4,7 @@
   </el-menu>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <el-button :icon="icon" circle @click="switchDark" />
+    <el-button circle @click="switchDark">
+      <EpSunny v-if="settingStore.isDark" />
+      <EpMoon v-else />
+    </el-button>
   </div>
 </template>
 
@@ -8,9 +11,7 @@
 import { useSettingStore } from "@/stores/settings";
 
 const settingStore = useSettingStore();
-const isDark = settingStore.isDark;
-const icon = computed(() => (isDark ? "el-icon-moon" : "el-icon-sunny"));
-const switchDark = () => settingStore.setDark(!isDark);
+const switchDark = () => settingStore.setDark(!settingStore.isDark);
 </script>
 
 <style lang="scss" scoped></style>

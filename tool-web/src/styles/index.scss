@@ -1,9 +1,18 @@
 @use "./tailwind.scss";
 @use "./animations.scss";
 
+@font-face {
+  font-family: HarmonyOS_Regular;
+  src: url("./font/HarmonyOS_Sans_SC_Medium.ttf");
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
+}
+
+html * {
+  font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, PingFang SC, Microsoft YaHei, sans-serif;
 }
 
 body {
@@ -11,12 +20,6 @@ body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-}
-
-label {
-  font-weight: 700;
 }
 
 #app {

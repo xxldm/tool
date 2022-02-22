@@ -1,24 +1,21 @@
 <template>
   <div>
     <el-button
-      :icon="icon"
       class="relative"
-      :style="{ 'z-index': isAppLock ? '9999' : 'auto' }"
+      :style="{ 'z-index': settingsStore.isAppLock ? '9999' : 'auto' }"
       circle
-      @click="switchAppLock"
-    />
-    <div
-      v-show="isAppLock"
-      style="z-index: 8000"
-      class="absolute inset-0 bg-gray-600 bg-opacity-30"
-    ></div>
+      @click="settingsStore.appLock = !settingsStore.isAppLock"
+    >
+      <MdiLockOpenVariantOutline v-if="settingsStore.isAppLock" />
+      <MdiLockOutline v-else />
+    </el-button>
   </div>
 </template>
 
 <script lang="ts" setup>
-let isAppLock = $ref(false);
-const icon = computed(() => (isAppLock ? "el-icon-lock" : "el-icon-unlock"));
-const switchAppLock = () => (isAppLock = !isAppLock);
+import { useSettingStore } from "@/stores/settings";
+
+const settingsStore = useSettingStore();
 </script>
 
 <style lang="scss" scoped></style>

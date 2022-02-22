@@ -9,13 +9,10 @@
         v-else-if="getLength(route.children) === 1"
         :index="route.children[0].path"
       >
-        {{
-          t(`menu.${route.children[0].name}`) +
-          `(${route.children[0].name}：${route.children[0].path})`
-        }}
+        {{ t(`menu.${route.children[0].name}`) }}
       </el-menu-item>
       <el-menu-item v-else :index="route.path">
-        {{ t(`menu.${route.name}`) + `(${route.name}：${route.path})` }}
+        {{ t(`menu.${route.name}`) }}
       </el-menu-item>
     </template>
   </template>

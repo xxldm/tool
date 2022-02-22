@@ -1,47 +1,58 @@
 <template>
-  <div class="sticky top-0">
+  <div class="top-0">
     <div class="flex space-x-2">
       <my-menu class="flex-grow" />
 
       <!--按钮-->
       <edit-button
-        v-show="route.meta.showEditButton && showEditButton"
+        v-show="route.meta.showEditButton && showShortcutButtons.edit"
         class="flex-none m-auto"
       />
-      <dark-button v-show="showDarkButton" class="flex-none m-auto" />
-      <locale-button v-show="showLocaleButton" class="flex-none m-auto" />
+      <dark-button v-show="showShortcutButtons.dark" class="flex-none m-auto" />
+      <locale-button
+        v-show="showShortcutButtons.locale"
+        class="flex-none m-auto"
+      />
       <focus-lock-button
         v-if="isElectron"
-        v-show="showFocusLockButton"
+        v-show="showShortcutButtons.focus"
         class="flex-none m-auto"
       />
       <always-on-top-button
         v-if="isElectron"
-        v-show="showTopButton"
+        v-show="showShortcutButtons.top"
         class="flex-none m-auto"
       />
-      <app-lock-button v-show="showAppLockButton" class="flex-none m-auto" />
+      <app-lock-button
+        v-show="showShortcutButtons.appLock"
+        class="flex-none m-auto"
+      />
 
       <el-dropdown class="flex-none m-auto">
-        <el-avatar :src="avatar" icon="el-icon-user-solid" />
+        <el-avatar :src="avatar" fit="contain">
+          <el-icon :size="40">
+            <FlatUiYinyang />
+          </el-icon>
+        </el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item icon="el-icon-user-solid">
+            <el-dropdown-item v-if="isServer" :icon="GridiconsUser">
               {{ name }}
             </el-dropdown-item>
-            <el-dropdown-item icon="el-icon-user" @click="logout">
-              {{ t("header.signOut") }}
-            </el-dropdown-item>
             <el-dropdown-item
-              icon="el-icon-s-tools"
-              divided
+              :icon="SettingTwo"
+              :divided="isServer"
               @click="jumpToSettings"
             >
               {{ t("header.settings") }}
             </el-dropdown-item>
+            <el-dropdown-item v-if="isServer" :icon="MdiLogout" @click="logout">
+              {{ t("header.signOut") }}
+            </el-dropdown-item>
             <el-dropdown-item
+              v-if="isElectron"
               divided
-              icon="el-icon-switch-button"
+              :icon="PowerStandby"
               @click="closeApp"
             >
               {{ t("header.closeApp") }}
@@ -54,8 +65,11 @@
 </template>
 
 <script lang="ts" setup>
-import { elApp, isElectron } from "@/utils/SettingUtil";
 import { useSettingStore } from "@/stores/settings";
+import GridiconsUser from "~icons/gridicons/user";
+import MdiLogout from "~icons/Mdi/Logout";
+import SettingTwo from "~icons/icon-park-outline/setting-two";
+import PowerStandby from "~icons/oi/power-standby";
 
 const settingStore = useSettingStore();
 const router = useRouter();
@@ -73,12 +87,9 @@ const name = $ref("名字");
 // const avatar = computed(() => store.getters.avatar);
 const avatar = $ref("");
 // const locale = settingStore.locale;
-const showDarkButton = settingStore.showShortcutButtons.dark;
-const showLocaleButton = settingStore.showShortcutButtons.locale;
-const showFocusLockButton = settingStore.showShortcutButtons.focus;
-const showTopButton = settingStore.showShortcutButtons.top;
-const showAppLockButton = settingStore.showShortcutButtons.appLock;
-const showEditButton = settingStore.showShortcutButtons.edit;
+const showShortcutButtons = settingStore.showShortcutButtons;
+const isElectron = settingStore.isElectron;
+const isServer = settingStore.isServer;
 </script>
 
 <style scoped></style>

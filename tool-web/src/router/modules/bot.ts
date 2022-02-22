@@ -19,7 +19,7 @@ export default [
         component: () => import("@/views/main/Main.vue"),
         name: "bot.botList2",
         meta: {
-          rules: [2, 3, 5, 7],
+          rules: [1, 2, 3, 5, 7],
         },
       },
     ],

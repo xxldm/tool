@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
 import { useSettingStore } from "@/stores/settings";
 
 export const useUserStore = defineStore("user", {

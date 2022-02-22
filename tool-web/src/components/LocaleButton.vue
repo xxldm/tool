@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dropdown @command="changeLocale">
-      <el-button icon="el-icon-location-information" circle />
+      <el-button circle><RiTranslate /></el-button>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item :disabled="disabled('zh-cn')" command="zh-cn">
@@ -21,7 +21,7 @@ import { useSettingStore } from "@/stores/settings";
 
 const settingStore = useSettingStore();
 const changeLocale = (command: string) => {
-  settingStore.locale = command;
+  settingStore.setLocal(command);
 };
 
 const disabled = (locale: string) => {
