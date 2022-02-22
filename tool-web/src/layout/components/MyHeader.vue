@@ -67,7 +67,7 @@
 <script lang="ts" setup>
 import { useSettingStore } from "@/stores/settings";
 import GridiconsUser from "~icons/gridicons/user";
-import MdiLogout from "~icons/Mdi/Logout";
+import MdiLogout from "~icons/mdi/logout";
 import SettingTwo from "~icons/icon-park-outline/setting-two";
 import PowerStandby from "~icons/oi/power-standby";
 
