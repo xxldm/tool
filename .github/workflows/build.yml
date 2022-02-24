@@ -32,7 +32,8 @@ jobs:
           pnpm install
           echo 编译 html
           pnpm build
-          echo 完成
+          echo 编译 完成
+          cp dist/index.html dist/404.html
 
       - name: 安装依赖 & 编译 electron
         run: |
