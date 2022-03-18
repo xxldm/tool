@@ -1,75 +1,14 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "commonjs": true
-  },
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    // 编译输出目标 ES 版本
-    "target": "esnext",
-    // 采用的模块系统
-    "module": "commonjs",
-    // 如何处理模块
-    "moduleResolution": "node",
-    // 以严格模式解析
-    "strict": true,
-    "jsx": "preserve",
-    // 从 tslib 导入外部帮助库: 比如__extends，__rest等
-    "importHelpers": true,
-    // 是否包含可以用于 debug 的 sourceMap
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    // 解析非相对模块名的基准目录
-    "baseUrl": "./",
-    // 给错误和消息设置样式，使用颜色和上下文。
-    "pretty": true,
-    "types": [
-      "vite/client",
-      "@intlify/vite-plugin-vue-i18n/client"
-    ],
-    "esModuleInterop": true,
-    // Type-Only Imports and Export
-    // This feature is something most users may never have to think about;
-    // however, if you’ve hit issues under --isolatedModules, TypeScript’s transpileModule API, or Babel, this feature might be relevant.
-    // TypeScript 3.8 adds a new syntax for type-only imports and exports.
-    // import type { SomeThing } from "./some-module.js";
-    // export type { SomeThing };
-    // 注意因为 esbuild 只执行转译工作而不含类型信息，所以它不支持 TypeScript 的特定功能例如常量枚举和隐式 “type-only” 导入。
-    // 你必须在你的 tsconfig.json 中的 compilerOptions 里设置 "isolatedModules": true，
-    // 这样 TS 才会警告你哪些功能无法与独立编译模式一同工作。
-    "isolatedModules": true,
-    // 指定特殊模块的路径
+    "baseUrl": ".",
+    "types": ["vite/client", "element-plus/global", "unplugin-icons/types/vue"],
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
-      "@*": [
-        "src/*"
-      ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
-    "allowSyntheticDefaultImports": true
+      "@/*": ["src/*"]
+    }
   },
-  "files": [
-    "typings/shims-vue.d.ts",
-    "typings/assets.d.ts"
-  ],
-  "include": [
-    "src/**/*.js",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
+  "include": ["src"],
   // ts 排除的文件
-  "exclude": [
-    ".yarn",
-    "src/public"
-  ]
+  "exclude": ["src/public/*"],
+  "references": [{ "path": "./tsconfig.vite-config.json" }]
 }

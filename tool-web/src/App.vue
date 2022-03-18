@@ -1,19 +1,27 @@
 <template>
-  <img alt="Vue logo" src="@assets/logo.png" />
-  <HelloWorld msg="Test Electron Updater 5" />
+  <el-config-provider :locale="elementSettingsStore.locale">
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
+  </el-config-provider>
+  <div
+    v-show="settingsStore.isAppLock"
+    style="z-index: 8000"
+    class="absolute inset-0 bg-gray-600 bg-opacity-30"
+  ></div>
 </template>
 
 <script lang="ts" setup>
-import HelloWorld from "@components/HelloWorld.vue";
-</script>
+import { useElementSettingsStore } from "@/stores/elementSettings";
+import { useSettingStore } from "@/stores/settings";
+import { isElectron, elApp } from "@/utils/SettingUtil";
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+onMounted(() => {
+  // 是应用，检查更新
+  if (isElectron) {
+    console.log(elApp.checkUpdate());
+  }
+});
+const elementSettingsStore = useElementSettingsStore();
+const settingsStore = useSettingStore();
+</script>

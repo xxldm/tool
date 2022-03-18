@@ -1,9 +1,8 @@
 globals:
-  process: "readonly"
   defineProps: "readonly"
   defineEmits: "readonly"
   defineExpose: "readonly"
-  withDefaults: "readonly"
+  require: "readonly"
 parser: "vue-eslint-parser"
 parserOptions:
   parser: "@typescript-eslint/parser"
@@ -21,6 +20,7 @@ extends:
     - "plugin:@intlify/vue-i18n/recommended"
     - "prettier"
     - "plugin:prettier/recommended"
+    - "./.eslintrc-auto-import.json"
 rules:
   "prettier/prettier": "error"
   "@intlify/vue-i18n/no-dynamic-keys": "error"
@@ -29,10 +29,10 @@ rules:
     - extensions:
         - ".js"
         - ".vue"
-overrides:
-  - files: "*.vue"
-    rules:
-      vue/no-setup-props-destructure: off
+#overrides:
+#  - files: "*.vue"
+#    rules:
+#      vue/no-setup-props-destructure: off
 #      no-unused-vars: "off"
 #      no-unused-labels: "off"
 #      no-undef: "off"

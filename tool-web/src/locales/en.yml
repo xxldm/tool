@@ -1,0 +1,60 @@
+appName: "Toolbox"
+add: "Add"
+del: "Delete"
+yes: "Yes"
+no: "No"
+confirm: "OK"
+cancel: "Cancel"
+operating: "Operation"
+closeApp: "Close the application"
+error:
+  noSubmit: "There is no submission method for this component, please contact the administrator!"
+  unknown: "Unknown error"
+warning:
+  noSaveByExit: "Exiting now will not save the content currently filled in. Are you sure you want to exit?"
+menu:
+  goMain: "Back to Homepage"
+  main: "Home"
+  login: "Login"
+  settings: "Settings"
+  notFound: "**Map, continue to navigate for you~"
+  test: "Test"
+  bot:
+    botName: "bot"
+    botList: "@:menu.bot.botName{'List'}"
+  calendar:
+    calendarName: "Calendar"
+  user:
+    userName: "User"
+    userList: "@:menu.user.userName{'List'}"
+header:
+  signOut: "Sign out"
+  settings: "Settings"
+  closeApp: "Close the application"
+settings:
+  changeLocale: "Switching is successful, some texts and functions need to be restarted to take effect!"
+  openAtLoginLabel: "Start on boot"
+  system: "System Settings"
+  shortcut: "The shortcut button in the upper right corner shows the settings"
+  showDarkButton: "Dark Mode"
+  showLocaleButton: "Language"
+  showTopButton: "Top"
+  showFocusLockButton: "Focus Lock"
+  showAppLockButton: "App Lock"
+  focusLockTooltip: "Whether the application can get focus in the system ({yn})"
+  alwaysOnTopTooltip: "Whether to top ({yn})"
+  showEditButton: "Edit mode button"
+main:
+  view:
+    date: "Date"
+    empty: "Empty"
+  addViewComponent: "Add Component"
+  order: "Order"
+  colnum: "Number of columns"
+  colSpan: "Number of columns"
+  rowSpan: "Number of rows"
+  center: "centered"
+  noBorder: "No Border"
+  rowHeight: "row height"
+forms:
+  chronograph: "Timer management"

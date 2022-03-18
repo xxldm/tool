@@ -19,15 +19,21 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v2
 
+      - name: 初始化pnpm环境
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.31.0
+
       - name: 安装依赖 & 编译 html
         run: |
           echo 开始
           cd tool-web
           echo 安装依赖
-          yarn
+          pnpm install
           echo 编译 html
-          yarn build
-          echo 完成
+          pnpm build
+          echo 编译 完成
+          cp dist/index.html dist/404.html
 
       - name: 安装依赖 & 编译 electron
         run: |
