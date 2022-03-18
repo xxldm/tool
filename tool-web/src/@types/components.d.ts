@@ -15,6 +15,10 @@ declare module 'vue' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
+    ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
+    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
@@ -26,12 +30,16 @@ declare module 'vue' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    EpMoon: typeof import('~icons/ep/moon')['default']
+    EpSunny: typeof import('~icons/ep/sunny')['default']
+    FlatUiYinyang: typeof import('~icons/flat-ui/yinyang')['default']
     FocusLockButton: typeof import('./../components/FocusLockButton.vue')['default']
     LocaleButton: typeof import('./../components/LocaleButton.vue')['default']
     MyHeader: typeof import('./../layout/components/MyHeader.vue')['default']
     MyMain: typeof import('./../layout/components/MyMain.vue')['default']
     MyMenu: typeof import('./../layout/components/MyMenu.vue')['default']
     MyMenuItem: typeof import('./../layout/components/MyMenuItem.vue')['default']
+    RiTranslate: typeof import('~icons/ri/translate')['default']
   }
 }
 

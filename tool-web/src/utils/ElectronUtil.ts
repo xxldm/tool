@@ -1,12 +1,26 @@
+import type { UpdateInfo } from "@/entity/UpdateInfo";
+import { useUpdateStore } from "@/stores/update";
+import { useSettingsStore } from "@/stores/settings";
+
 export const isElectron =
   typeof navigator === "object" && navigator.userAgent.indexOf("Electron") >= 0;
 
 let store: { get: Function; set: Function } = { get: () => {}, set: () => {} };
 
-let win: { setFocusable: Function; setAlwaysOnTop: Function } = {
+let win: {
+  setFocusable: Function;
+  setAlwaysOnTop: Function;
+  setDark: Function;
+  getDark: Function;
+} = {
   setFocusable: () => {},
   setAlwaysOnTop: () => {},
+  setDark: () => {},
+  getDark: () => {},
 };
+
+let updateStore = <any>undefined;
+let settingsStore = <any>undefined;
 
 let app: { checkUpdate: Function; setOpenAtLogin: Function; quit: Function } = {
   checkUpdate: () => {},
@@ -27,6 +41,14 @@ if (isElectron) {
     ipcRenderer.send("setFocusable", focusable);
   win.setAlwaysOnTop = (alwaysOnTop: boolean) =>
     ipcRenderer.send("setAlwaysOnTop", alwaysOnTop);
+  win.setDark = (dark?: boolean) => ipcRenderer.send("setDark", dark);
+  win.getDark = () => ipcRenderer.sendSync("getDark");
+  ipcRenderer.on("nativeThemeUpdated", (event, args) => {
+    if (settingsStore === undefined) {
+      settingsStore = useSettingsStore();
+    }
+    settingsStore.dark = args;
+  });
 
   app.checkUpdate = () => ipcRenderer.sendSync("checkUpdate");
 

@@ -52,6 +52,14 @@
             <el-dropdown-item
               v-if="isElectron"
               divided
+              :icon="DashiconsUpdate"
+              @click="checkForUpdates"
+            >
+              {{ t("header.checkForUpdates") }}
+            </el-dropdown-item>
+            <el-dropdown-item
+              v-if="isElectron"
+              divided
               :icon="PowerStandby"
               @click="closeApp"
             >
@@ -70,6 +78,7 @@ import GridiconsUser from "~icons/gridicons/user";
 import MdiLogout from "~icons/mdi/logout";
 import SettingTwo from "~icons/icon-park-outline/setting-two";
 import PowerStandby from "~icons/oi/power-standby";
+import DashiconsUpdate from "~icons/dashicons/update";
 
 const settingStore = useSettingStore();
 const router = useRouter();
@@ -81,6 +90,9 @@ const jumpToSettings = () => {
   router.push("/settings");
 };
 const closeApp = () => {};
+const checkForUpdates = () => {
+  settingStore.manualCheckForUpdates();
+};
 
 // const name = computed(() => store.getters.name);
 const name = $ref("名字");
@@ -88,8 +100,8 @@ const name = $ref("名字");
 const avatar = $ref("");
 // const locale = settingStore.locale;
 const showShortcutButtons = settingStore.showShortcutButtons;
-const isElectron = settingStore.isElectron;
-const isServer = settingStore.isServer;
+const isElectron = computed(() => settingStore.isElectron);
+const isServer = computed(() => settingStore.isServer);
 </script>
 
 <style scoped></style>

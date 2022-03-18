@@ -3,6 +3,7 @@ import { initUserRoute, router } from "@/router";
 import i18n, { setLocale } from "@/i18n";
 import { useSettingStore } from "@/stores/settings";
 import "@/styles/index.scss";
+import "github-markdown-css/github-markdown.css";
 import "uno.css";
 
 const app = createApp(App);

@@ -1,5 +1,6 @@
-import { config, elApp, elWin, isElectron } from "@/utils/SettingUtil";
+import { config, elApp, elWin, isElectron } from "@/utils/ElectronUtil";
 import { setLocale } from "@/i18n";
+import { useUpdateStore } from "@/stores/update";
 
 export const useSettingStore = defineStore("setting", {
   state: () => ({
@@ -7,9 +8,10 @@ export const useSettingStore = defineStore("setting", {
     server: config.get("server"),
     edit: false,
     appLock: false,
+    skipUpdate: config.get("skipUpdate"),
     openAtLogin: config.get("openAtLogin", false),
     locale: config.get("locale", "zh-cn"),
-    dark: config.get("dark", false),
+    dark: elWin.getDark(),
     focusable: config.get("focusable", true),
     alwaysOnTop: config.get("alwaysOnTop", false),
     showShortcutButtons: config.get("showShortcutButtons", {
@@ -36,14 +38,20 @@ export const useSettingStore = defineStore("setting", {
       this.openAtLogin = openAtLogin;
       elApp.setOpenAtLogin(openAtLogin);
     },
-    setDark(dark: boolean) {
+    setDark(dark?: boolean) {
       this.dark = dark;
-      config.set("dark", dark);
+      elWin.setDark(dark);
     },
-    setFocusable(focusable: boolean) {
-      this.focusable = focusable;
-      config.set("focusable", focusable);
-      elWin.setFocusable(focusable);
+    manualCheckForUpdates() {
+      const updateStore = useUpdateStore();
+      updateStore.loading = true;
+      updateStore.showDialog = true;
+      updateStore.resetUpdateInfo();
+      elApp.checkUpdates();
+    },
+    setAppLock(appLock: boolean) {
+      this.appLock = appLock;
+      elWin.setFocusable(appLock);
     },
     setAlwaysOnTop(alwaysOnTop: boolean) {
       this.alwaysOnTop = alwaysOnTop;

@@ -82,7 +82,7 @@ const showEditButton = computed({
   set: (data: boolean) => settingsStore.setShowShortcutButtons("edit", data),
 });
 
-const isElectron = settingsStore.isElectron;
+const isElectron = computed(() => settingsStore.isElectron);
 </script>
 
 <style lang="scss" scoped></style>

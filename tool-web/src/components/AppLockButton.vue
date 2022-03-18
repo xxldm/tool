@@ -4,7 +4,7 @@
       class="relative"
       :style="{ 'z-index': settingsStore.isAppLock ? '9999' : 'auto' }"
       circle
-      @click="settingsStore.appLock = !settingsStore.isAppLock"
+      @click="switchAppLock"
     >
       <div v-if="settingsStore.isAppLock" i-mdi-lock-open-variant-outline />
       <div v-else i-mdi-lock-outline />
@@ -16,6 +16,7 @@
 import { useSettingStore } from "@/stores/settings";
 
 const settingsStore = useSettingStore();
+const switchAppLock = () => settingsStore.setAppLock(!settingsStore.isAppLock);
 </script>
 
 <style lang="scss" scoped></style>

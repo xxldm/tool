@@ -1,13 +1,16 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@iconify-json/arcticons': ^1.1.0
   '@iconify-json/bx': ^1.1.0
+  '@iconify-json/dashicons': ^1.1.0
   '@iconify-json/ep': ^1.1.1
   '@iconify-json/flat-ui': ^1.1.0
   '@iconify-json/gridicons': ^1.1.0
   '@iconify-json/icon-park-outline': ^1.1.0
   '@iconify-json/mdi': ^1.1.0
   '@iconify-json/oi': ^1.1.0
+  '@iconify-json/radix-icons': ^1.1.2
   '@iconify-json/ri': ^1.1.0
   '@intlify/eslint-plugin-vue-i18n': ^1.2.0
   '@intlify/vite-plugin-vue-i18n': ^3.2.2
@@ -31,6 +34,7 @@ specifiers:
   eslint-config-prettier: ^8.4.0
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue: ^8.4.1
+  github-markdown-css: ^5.1.0
   js-cookie: ^3.0.1
   pinia: ^2.0.11
   postcss: ^8.4.6
@@ -52,6 +56,7 @@ dependencies:
   axios: 0.25.0
   dayjs: 1.10.7
   element-plus: 2.0.2_1a412d14def5ff5ca1122000e4bee666
+  github-markdown-css: 5.1.0
   js-cookie: 3.0.1
   pinia: 2.0.11_typescript@4.5.5+vue@3.2.31
   qs: 6.10.3
@@ -60,13 +65,16 @@ dependencies:
   vue-router: 4.0.12_vue@3.2.31
 
 devDependencies:
+  '@iconify-json/arcticons': 1.1.0
   '@iconify-json/bx': 1.1.0
+  '@iconify-json/dashicons': 1.1.0
   '@iconify-json/ep': 1.1.1
   '@iconify-json/flat-ui': 1.1.0
   '@iconify-json/gridicons': 1.1.0
   '@iconify-json/icon-park-outline': 1.1.0
   '@iconify-json/mdi': 1.1.0
   '@iconify-json/oi': 1.1.0
+  '@iconify-json/radix-icons': 1.1.2
   '@iconify-json/ri': 1.1.0
   '@intlify/eslint-plugin-vue-i18n': 1.3.0_eslint@8.9.0
   '@intlify/vite-plugin-vue-i18n': 3.3.0_vite@2.8.4+vue-i18n@9.1.9
@@ -198,8 +206,20 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@iconify-json/arcticons/1.1.0:
+    resolution: {integrity: sha512-rnBZdwaSTEXgPxENwThzE95nmECZ0VVA3Fb3+IeTmkk1HULeSc2Bp95lO8f26piwKsJ1fGpiNCDKxmtQ5XsX3g==}
+    dependencies:
+      '@iconify/types': 1.0.12
+    dev: true
+
   /@iconify-json/bx/1.1.0:
     resolution: {integrity: sha512-1pHDHQmcgURTmNOjs34rwtju4wdIYsTI0vZp1btKoXgAoE5QQXSH8eP6nDUqmszWBQKjwkPMY+afD5t3lQdKlg==}
+    dependencies:
+      '@iconify/types': 1.0.12
+    dev: true
+
+  /@iconify-json/dashicons/1.1.0:
+    resolution: {integrity: sha512-kM9z3+tNBA9s3VyGZLjNKXH+q6jfI3KxacIbtFPDEUj3xJSuS7b/wbR0h7QfxNEGJYt5H2nMYLcvG7aUpij6+A==}
     dependencies:
       '@iconify/types': 1.0.12
     dev: true
@@ -236,6 +256,12 @@ packages:
 
   /@iconify-json/oi/1.1.0:
     resolution: {integrity: sha512-MztbtiT/afMyc7Kr70IWyQ90eROR7/hIaJtEhPIXOcMenahOD9oDzJ743tRjxZc7+l3luQ4OtF+BFjKgjoPKsA==}
+    dependencies:
+      '@iconify/types': 1.0.12
+    dev: true
+
+  /@iconify-json/radix-icons/1.1.2:
+    resolution: {integrity: sha512-paHtKXWyf/OCGYdB+r85+/xqinV/mVbi9YH1rWygdYc3Y2wf0SlUA7RibifMWcS7SevjfKH2Wy0xX4XtZ0gfyQ==}
     dependencies:
       '@iconify/types': 1.0.12
     dev: true
@@ -1881,6 +1907,10 @@ packages:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
     dev: true
+
+  /github-markdown-css/5.1.0:
+    resolution: {integrity: sha512-QLtORwHHtUHhPMHu7i4GKfP6Vx5CWZn+NKQXe+cBhslY1HEt0CTEkP4d/vSROKV0iIJSpl4UtlQ16AD8C6lMug==}
+    dev: false
 
   /glob-parent/5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}

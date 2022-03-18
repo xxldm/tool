@@ -41,6 +41,7 @@ menu:
 header:
   signOut: "退出登录"
   settings: "设置"
+  checkForUpdates: "检查更新"
   closeApp: "关闭应用"
 settings:
   changeLocale: "切换成功，部分文字、功能需要重启后生效！"
@@ -55,6 +56,8 @@ settings:
   focusLockTooltip: "该应用在系统中是否可以获取焦点（{yn}）"
   alwaysOnTopTooltip: "是否置顶（{yn}）"
   showEditButton: "编辑模式按钮"
+update:
+  title: "更新应用"
 main:
   view:
     date: "日期"

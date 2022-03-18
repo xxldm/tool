@@ -10,9 +10,10 @@ import {
   Tray,
   dialog,
   MenuItem,
+  nativeTheme,
 } from "electron";
 import ElectronStore from "electron-store";
-import { autoUpdater } from "electron-updater";
+import { autoUpdater, UpdateInfo } from "electron-updater";
 
 // 存储操作对象
 let store: ElectronStore;
@@ -77,6 +78,50 @@ function initIpc() {
   ipcMain.on("setAlwaysOnTop", (event, isAlwaysOnTop: any) =>
     win.setAlwaysOnTop(isAlwaysOnTop)
   );
+  // 网页发起对暗黑模式的修改
+  ipcMain.on("setDark", (event, isDark: boolean | undefined) => {
+    if (isDark === undefined) {
+      // 读取系统模式
+      nativeTheme.themeSource = "system";
+      // 清除已保存的模式值
+      store.delete("dark");
+    } else if (isDark) {
+      // 指定使用暗黑模式
+      nativeTheme.themeSource = "dark";
+      // 持久化模式值
+      store.set("dark", true);
+    } else {
+      // 指定不使用暗黑模式
+      nativeTheme.themeSource = "light";
+      // 持久化模式值
+      store.set("dark", false);
+    }
+  });
+  // 系统颜色系属性发生改变
+  nativeTheme.on("updated", (event) => {
+    console.log(event);
+    // todo 判断是否是系统暗黑模式的改变
+    // 读取用户是否指定暗黑模式
+    const dark = store.get("dark");
+    if (dark === undefined) {
+      // 用户使用系统值，返回新的系统值
+      win.webContents.send(
+        "nativeThemeUpdated",
+        nativeTheme.shouldUseDarkColors
+      );
+    }
+  });
+  // 网页初始化发起获取暗黑模式值
+  ipcMain.on("getDark", (event) => {
+    const dark = store.get("dark");
+    if (dark === undefined) {
+      // 用户没有设置过暗黑模式，使用系统的值
+      event.returnValue = nativeTheme.shouldUseDarkColors;
+    } else {
+      // 返回用户设置的值
+      event.returnValue = dark;
+    }
+  });
   // 配置文件读取
   ipcMain.on("electronStoreGet", (event, arg: any) => {
     event.returnValue = store.get(arg[0], arg[1]);
