@@ -13,7 +13,6 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default ({ mode }: { mode: string }): UserConfigExport => {
-  console.log(mode);
   return {
     css: {
       preprocessorOptions: {
@@ -74,7 +73,7 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
       }),
     ],
     root: resolve("src"),
-    base: "./",
+    base: mode == "production" ? "/tool/" : "/",
     server: {
       host: "::",
       port: 80,
