@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.0.2-beta.1",
+  "version": "0.0.1",
   "description": "乡下来的工具箱",
   "main": "dist/main/index.js",
   "author": "乡下来的喵",
@@ -21,8 +21,7 @@
     "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
-        "provider": "github",
-        "releaseType": "prerelease"
+        "provider": "github"
       }
     ],
     "directories": {

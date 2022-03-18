@@ -14,7 +14,14 @@
 <script lang="ts" setup>
 import { useElementSettingsStore } from "@/stores/elementSettings";
 import { useSettingStore } from "@/stores/settings";
+import { isElectron, elApp } from "@/utils/SettingUtil";
 
+onMounted(() => {
+  // 是应用，检查更新
+  if (isElectron) {
+    console.log(elApp.checkUpdate());
+  }
+});
 const elementSettingsStore = useElementSettingsStore();
 const settingsStore = useSettingStore();
 </script>

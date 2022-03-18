@@ -3,6 +3,7 @@ import { initUserRoute, router } from "@/router";
 import i18n, { setLocale } from "@/i18n";
 import { useSettingStore } from "@/stores/settings";
 import "@/styles/index.scss";
+import "uno.css";
 
 const app = createApp(App);
 app.use(i18n).use(createPinia());

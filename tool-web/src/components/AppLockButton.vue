@@ -6,8 +6,8 @@
       circle
       @click="settingsStore.appLock = !settingsStore.isAppLock"
     >
-      <MdiLockOpenVariantOutline v-if="settingsStore.isAppLock" />
-      <MdiLockOutline v-else />
+      <div v-if="settingsStore.isAppLock" i-mdi-lock-open-variant-outline />
+      <div v-else i-mdi-lock-outline />
     </el-button>
   </div>
 </template>

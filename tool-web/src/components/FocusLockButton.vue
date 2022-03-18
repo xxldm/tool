@@ -1,11 +1,13 @@
 <template>
   <div>
-    <el-tooltip
-      :content="
-        t('settings.focusLockTooltip', { yn: isFocusable ? t('yes') : t('no') })
-      "
-      placement="bottom"
-    >
+    <el-tooltip placement="bottom">
+      <template #content>
+        {{
+          t("settings.focusLockTooltip", {
+            yn: isFocusable ? t("yes") : t("no"),
+          })
+        }}
+      </template>
       <el-button :icon="icon" circle @click="switchFocusable" />
     </el-tooltip>
   </div>

@@ -3,9 +3,12 @@ import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import Icons from "unplugin-icons/vite";
-import IconsResolver from "unplugin-icons/resolver";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import Unocss from "unocss/vite";
+import presetAttributify from "@unocss/preset-attributify";
+import presetWind from "@unocss/preset-wind";
+import presetIcons from "@unocss/preset-icons";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
@@ -61,12 +64,10 @@ export default ({ mode }: { mode: string }): UserConfigExport => {
       Components({
         dirs: ["components", "layout/components"],
         dts: "@types/components.d.ts",
-        resolvers: [
-          ElementPlusResolver({ importStyle: "sass" }),
-          IconsResolver({
-            prefix: false,
-          }),
-        ],
+        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+      }),
+      Unocss({
+        presets: [presetAttributify(), presetIcons(), presetWind()],
       }),
       Icons({
         autoInstall: true,

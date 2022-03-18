@@ -3,7 +3,7 @@ import { setLocale } from "@/i18n";
 
 export const useSettingStore = defineStore("setting", {
   state: () => ({
-    electron: isElectron,
+    electron: true,
     server: config.get("server"),
     edit: false,
     appLock: false,

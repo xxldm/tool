@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-dropdown @command="changeLocale">
-      <el-button circle><RiTranslate /></el-button>
+      <el-button circle>
+        <div i-ri-translate></div>
+      </el-button>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item :disabled="disabled('zh-cn')" command="zh-cn">

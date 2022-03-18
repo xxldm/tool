@@ -1,16 +1,16 @@
 <template>
   <div>
-    <el-divider v-if="isElectron" content-position="left">{{
-      t("settings.system")
-    }}</el-divider>
+    <el-divider v-if="isElectron" content-position="left">
+      {{ t("settings.system") }}
+    </el-divider>
     <el-descriptions v-if="isElectron">
       <el-descriptions-item :label="t('settings.openAtLoginLabel')">
         <el-switch v-model="openAtLogin" />
       </el-descriptions-item>
     </el-descriptions>
-    <el-divider content-position="left">{{
-      t("settings.shortcut")
-    }}</el-divider>
+    <el-divider content-position="left">
+      {{ t("settings.shortcut") }}
+    </el-divider>
     <el-descriptions :column="6">
       <el-descriptions-item :label="t('settings.showDarkButton')">
         <el-switch v-model="showDarkButton" disabled />

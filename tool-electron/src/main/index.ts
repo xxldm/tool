@@ -9,7 +9,6 @@ import {
   Menu,
   Tray,
   dialog,
-  MessageBoxReturnValue,
   MenuItem,
 } from "electron";
 import ElectronStore from "electron-store";
@@ -25,7 +24,6 @@ let win: BrowserWindow;
 let tray: Tray;
 
 const OPEN_AT_LOGIN_KEY = "openAtLogin";
-const UPDATE_CHANNEL_KEY = "updateChannel";
 
 init();
 
@@ -42,11 +40,9 @@ function init() {
     : join(app.getAppPath(), "../../favicon.png");
   initConfig();
   initIpc();
-  if (app.isPackaged) {
-    initUpdater();
-    // 检查更新
-    autoUpdater.checkForUpdates();
-  }
+  // if (app.isPackaged) {
+  initUpdater();
+  // }
 }
 
 /**
@@ -100,52 +96,50 @@ function initConfig() {
   store.set(OPEN_AT_LOGIN_KEY, openAtLogin);
 }
 
+/**
+ * 初始化更新程序
+ */
 function initUpdater() {
-  autoUpdater.channel = store.get(UPDATE_CHANNEL_KEY, "beta");
+  // 关闭自动下载
   autoUpdater.autoDownload = false;
-
+  // 允许更新到预发布版本
+  autoUpdater.allowPrerelease = <boolean>store.get("allowPrerelease", true);
+  // 获取所有版本的更新日志
+  autoUpdater.fullChangelog = true;
+  // 页面调用检查更新
+  ipcMain.on("checkUpdate", (event) => {
+    // 检查更新
+    autoUpdater.checkForUpdates().then((updateCheckResult) => {
+      // 返还结果给页面
+      event.returnValue = updateCheckResult.updateInfo;
+    });
+  });
+  // 监听下载进度
+  autoUpdater.on(
+    "download-progress",
+    (progress, bytesPerSecond, percent, total, transferred) => {
+      console.log(progress);
+      console.log(bytesPerSecond);
+      console.log(percent);
+      console.log(total);
+      console.log(transferred);
+    }
+  );
+  // 页面调用下载更新
+  ipcMain.on("downloadUpdate", () => {
+    // 下载更新
+    autoUpdater.downloadUpdate();
+  });
+  // 更新出错
   autoUpdater.on("error", (error: any) => {
     dialog.showErrorBox(
       "错误: ",
       error == null ? "未知" : (error.stack || error).toString()
     );
   });
-
-  autoUpdater.on("update-available", (updateInfo: any) => {
-    dialog
-      .showMessageBox({
-        type: "info",
-        title: "检查更新",
-        message: `新版本[${updateInfo.version}]已发布是否更新？`,
-        buttons: ["更新", "下次一定", "跳过这个版本"],
-      })
-      .then((buttonIndex: MessageBoxReturnValue) => {
-        if (buttonIndex.response === 0) {
-          autoUpdater.downloadUpdate();
-        }
-      });
-  });
-
-  // autoUpdater.on("update-not-available", () => {
-  //   dialog.showMessageBox({
-  //     title: "检查更新",
-  //     message: "当前版本已是最新版本！",
-  //   });
-  // });
-
-  autoUpdater.on("update-downloaded", () => {
-    dialog
-      .showMessageBox({
-        type: "info",
-        title: "检查更新",
-        message: "新版本已下载完毕！",
-        buttons: ["重启", "稍后手动重启"],
-      })
-      .then((buttonIndex: MessageBoxReturnValue) => {
-        if (buttonIndex.response === 0) {
-          setImmediate(() => autoUpdater.quitAndInstall(true, true));
-        }
-      });
+  // 立即更新，如果没有调用这个方法，应用会在手动关闭后自动更新
+  ipcMain.on("quitAndInstall", () => {
+    autoUpdater.quitAndInstall(true, true);
   });
 }
 
@@ -174,9 +168,9 @@ function createWin() {
     // 禁止F11这种系统全屏
     fullscreenable: false,
     // 可以获取焦点
-    focusable: store.get("isFocusable", true),
+    focusable: <boolean>store.get("isFocusable", true),
     // 置顶
-    alwaysOnTop: store.get("isAlwaysOnTop", false),
+    alwaysOnTop: <boolean>store.get("isAlwaysOnTop", false),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

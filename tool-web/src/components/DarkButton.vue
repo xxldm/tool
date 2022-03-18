@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-button circle @click="switchDark">
-      <EpSunny v-if="settingStore.isDark" />
-      <EpMoon v-else />
+      <div v-if="settingStore.isDark" i-ep-sunny />
+      <div v-else i-ep-moon />
     </el-button>
   </div>
 </template>

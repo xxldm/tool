@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button circle @click="enterEdit"><MdiSquareEditOutline /></el-button>
+    <el-button circle @click="enterEdit">
+      <div i-mdi-square-edit-outline />
+    </el-button>
   </div>
 </template>
 

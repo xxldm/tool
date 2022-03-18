@@ -8,7 +8,8 @@ let win: { setFocusable: Function; setAlwaysOnTop: Function } = {
   setAlwaysOnTop: () => {},
 };
 
-let app: { setOpenAtLogin: Function; quit: Function } = {
+let app: { checkUpdate: Function; setOpenAtLogin: Function; quit: Function } = {
+  checkUpdate: () => {},
   setOpenAtLogin: () => {},
   quit: () => {},
 };
@@ -26,6 +27,8 @@ if (isElectron) {
     ipcRenderer.send("setFocusable", focusable);
   win.setAlwaysOnTop = (alwaysOnTop: boolean) =>
     ipcRenderer.send("setAlwaysOnTop", alwaysOnTop);
+
+  app.checkUpdate = () => ipcRenderer.sendSync("checkUpdate");
 
   app.setOpenAtLogin = (openAtLogin: boolean) =>
     ipcRenderer.send("openAtLogin", openAtLogin);
@@ -88,7 +91,6 @@ if (isElectron) {
     window.localStorage.setItem(key, JSON.stringify(val));
   };
 }
-
 export const config = store;
 export const elWin = win;
 export const elApp = app;
